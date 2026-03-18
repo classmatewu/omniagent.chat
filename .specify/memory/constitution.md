@@ -1,50 +1,109 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+  Sync Impact Report
+  Version change: 0.0.0 → 1.0.0
+  Added principles:
+    - I. Component-First
+    - II. Performance-First
+    - III. Accessibility (a11y)
+    - IV. Type Safety
+    - V. Visual Consistency
+    - VI. Simplicity
+  Added sections:
+    - Technology Constraints
+    - Development Workflow
+  Templates requiring updates: ✅ all reviewed, no updates needed at initial version
+  Follow-up TODOs: none
+-->
+
+# omniagent.chat Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Component-First
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All UI MUST be built as isolated, reusable React components with clear props interfaces.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- Each component MUST be self-contained: own styles, own types, own default props.
+- Components MUST follow single-responsibility — one component does one thing well.
+- Shared components MUST live in a dedicated `components/ui/` directory; page-specific components MUST live alongside their page.
+- Every shared component MUST export its TypeScript prop types for consumers.
+- Composition over inheritance — use children, render props, or hooks to extend behavior; never deep component hierarchies.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Performance-First
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+Core Web Vitals MUST be the primary measure of frontend quality.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+- LCP (Largest Contentful Paint) MUST be under 2.5 seconds on mobile 4G.
+- CLS (Cumulative Layout Shift) MUST be under 0.1.
+- INP (Interaction to Next Paint) MUST be under 200ms.
+- Images MUST use next-gen formats (WebP/AVIF) with explicit width/height to prevent layout shift.
+- Code splitting MUST be applied at the route level; heavy third-party libraries MUST be lazy-loaded.
+- Fonts MUST be preloaded and use `font-display: swap` to avoid render blocking.
+- No JavaScript bundle delivered to the client SHOULD exceed 150 KB gzipped without documented justification.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### III. Accessibility (a11y)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+The site MUST conform to WCAG 2.1 Level AA at minimum.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- All interactive elements MUST be keyboard-navigable with visible focus indicators.
+- All images MUST have meaningful `alt` text; decorative images MUST use `alt=""` with `aria-hidden="true"`.
+- Color contrast MUST meet a minimum ratio of 4.5:1 for body text, 3:1 for large text.
+- Page structure MUST use semantic HTML5 elements (`<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`).
+- Dynamic content changes MUST be announced to screen readers via ARIA live regions.
+- Forms MUST have associated `<label>` elements; error messages MUST be programmatically linked to their inputs.
+
+### IV. Type Safety
+
+TypeScript strict mode MUST be enabled; `any` type is prohibited in production code.
+
+- All component props MUST have explicit TypeScript interfaces or types.
+- API response data MUST be validated against typed schemas (e.g., Zod) at the boundary.
+- Shared types MUST be centralized in a `types/` directory to avoid duplication.
+- Union types and discriminated unions SHOULD be preferred over optional fields when modeling variant data.
+
+### V. Visual Consistency
+
+A unified design token system MUST govern all visual properties.
+
+- Colors, spacing, typography, shadows, and border radii MUST be defined as CSS custom properties or a theme object — never hardcoded magic values.
+- Responsive design MUST follow a mobile-first approach with defined breakpoints (e.g., sm/md/lg/xl).
+- Motion and animation MUST respect `prefers-reduced-motion` user preference.
+- Dark mode support SHOULD be considered from initial implementation via CSS custom properties.
+
+### VI. Simplicity
+
+Start with the minimal viable implementation; extend only when there is a proven need.
+
+- YAGNI: Do not add features, abstractions, or dependencies "just in case."
+- Prefer native browser APIs and platform primitives over third-party libraries when capability is equivalent.
+- File count per feature SHOULD stay below 7; exceeding this requires documented justification.
+- No global state management library is needed unless multiple unrelated components share the same data — start with React Context and local state.
+
+## Technology Constraints
+
+- **Language**: TypeScript 5.x (strict mode enabled)
+- **Framework**: React 18+ with a modern build tool (Vite or Next.js)
+- **Styling**: CSS Modules, Tailwind CSS, or CSS-in-JS — MUST be consistent across the project; mixing approaches is prohibited
+- **Package Manager**: pnpm or npm — MUST be consistent; lockfile MUST be committed
+- **Linting**: ESLint + Prettier MUST be configured and enforced via pre-commit hooks
+- **Browser Support**: Latest 2 versions of Chrome, Firefox, Safari, Edge; no IE support
+- **Deployment Target**: Static site or SSR/SSG — production build MUST generate optimized assets
+
+## Development Workflow
+
+- All changes MUST go through pull requests; direct pushes to `main` are prohibited.
+- Each PR MUST pass lint, type-check, and build before merge.
+- Commit messages MUST follow Conventional Commits format (e.g., `feat:`, `fix:`, `chore:`).
+- New shared components MUST include at minimum: TypeScript types, a usage example in comments or documentation, and visual review in the PR.
+- Performance-impacting changes (new dependencies, large assets, layout changes) MUST include a Lighthouse score or Web Vitals measurement in the PR description.
+- Dependency additions MUST be justified — bundle size impact MUST be documented.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution is the authoritative source of project standards for omniagent.chat. All code reviews and pull requests MUST verify compliance with these principles.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- Amendments require: (1) a written proposal describing the change and its rationale, (2) documented approval, and (3) a migration plan if existing code is affected.
+- Version increments follow semantic versioning: MAJOR for principle removal or redefinition, MINOR for new principles or sections, PATCH for clarifications and wording improvements.
+- Violations discovered in review MUST be resolved before merge unless an exception is explicitly documented in the PR with justification.
+
+**Version**: 1.0.0 | **Ratified**: 2026-03-18 | **Last Amended**: 2026-03-18
