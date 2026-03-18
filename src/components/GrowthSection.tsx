@@ -33,7 +33,7 @@ export default function GrowthSection({ heading, description, statistics }: Grow
             opacity: 1,
             y: 0,
             duration: 0.8,
-            ease: 'power3.out',
+            ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
             scrollTrigger: {
               trigger: '[data-animate="growth-heading"]',
               start: 'top 85%',
@@ -45,7 +45,7 @@ export default function GrowthSection({ heading, description, statistics }: Grow
             opacity: 1,
             y: 0,
             duration: 0.8,
-            ease: 'power3.out',
+            ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
             scrollTrigger: {
               trigger: '[data-animate="growth-desc"]',
               start: 'top 85%',
@@ -59,9 +59,9 @@ export default function GrowthSection({ heading, description, statistics }: Grow
               gsap.to(batch, {
                 opacity: 1,
                 y: 0,
-                duration: 0.6,
-                ease: 'power3.out',
-                stagger: 0.15,
+                duration: 0.7,
+                ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
+                stagger: 0.12,
               }),
             start: 'top 85%',
             once: true,
@@ -76,31 +76,45 @@ export default function GrowthSection({ heading, description, statistics }: Grow
   }, []);
 
   return (
-    <section ref={sectionRef} id="growth" className="section-padding relative">
+    <section
+      ref={sectionRef}
+      id="growth"
+      className="section-padding"
+      style={{ background: 'var(--color-surface-alt)' }}
+    >
       <div className="content-max-width">
         <div className="text-center mb-16 md:mb-20">
           <h2
             data-animate="growth-heading"
-            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[rgb(var(--color-text))]"
+            className="text-[clamp(1.75rem,4vw,3rem)] font-semibold tracking-[-0.02em] leading-[1.1]"
+            style={{ color: 'var(--color-text)' }}
           >
             {heading}
           </h2>
           <p
             data-animate="growth-desc"
-            className="mt-6 text-lg md:text-xl text-[rgb(var(--color-text-muted))] max-w-2xl mx-auto leading-relaxed font-light"
+            className="mt-5 text-[clamp(1rem,1.5vw,1.25rem)] max-w-2xl mx-auto leading-relaxed"
+            style={{ color: 'var(--color-text-secondary)' }}
           >
             {description}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
           {statistics.map((stat, index) => (
             <div
               key={index}
               data-animate="stat-card"
-              className="gradient-border-card text-center p-8"
+              className="rounded-2xl p-8 md:p-10 transition-colors duration-300"
+              style={{
+                background: 'var(--color-surface)',
+                border: '1px solid var(--color-border)',
+              }}
             >
-              <div className="text-4xl md:text-5xl font-bold gradient-text mb-3">
+              <div
+                className="text-[clamp(2.5rem,5vw,3.5rem)] font-bold tracking-[-0.02em] mb-2 tabular-nums"
+                style={{ color: 'var(--color-text)' }}
+              >
                 <AnimatedCounter
                   value={stat.value}
                   prefix={stat.prefix}
@@ -108,19 +122,23 @@ export default function GrowthSection({ heading, description, statistics }: Grow
                   duration={2}
                 />
               </div>
-              <div className="text-base font-semibold text-[rgb(var(--color-text))] mb-2">
+              <div
+                className="text-base font-semibold mb-2"
+                style={{ color: 'var(--color-text)' }}
+              >
                 {stat.label}
               </div>
               {stat.context && (
-                <p className="text-sm text-[rgb(var(--color-text-muted))] leading-relaxed">
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: 'var(--color-text-secondary)' }}
+                >
                   {stat.context}
                 </p>
               )}
             </div>
           ))}
         </div>
-
-        <div className="section-divider mt-16 md:mt-20" />
       </div>
     </section>
   );

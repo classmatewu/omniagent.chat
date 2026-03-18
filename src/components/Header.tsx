@@ -10,7 +10,6 @@ export default function Header({ brandName, navItems }: HeaderProps) {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  // Track scroll for sticky header background
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -19,7 +18,6 @@ export default function Header({ brandName, navItems }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Focus trap and keyboard handling
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (!isMenuOpen) return;
@@ -57,11 +55,9 @@ export default function Header({ brandName, navItems }: HeaderProps) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
-  // Lock body scroll when menu open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
-      // Focus first nav item
       const firstLink = menuRef.current?.querySelector<HTMLElement>('a');
       firstLink?.focus();
     } else {
@@ -86,28 +82,34 @@ export default function Header({ brandName, navItems }: HeaderProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-[rgb(var(--color-surface)/0.85)] backdrop-blur-md border-b border-[rgb(var(--color-border)/0.5)]'
-          : 'bg-transparent'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      style={{
+        background: isScrolled
+          ? 'rgba(0, 0, 0, 0.72)'
+          : 'transparent',
+        backdropFilter: isScrolled ? 'saturate(180%) blur(20px)' : 'none',
+        WebkitBackdropFilter: isScrolled ? 'saturate(180%) blur(20px)' : 'none',
+        borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid transparent',
+      }}
     >
-      <div className="content-max-width flex items-center justify-between h-16 md:h-20">
+      <div className="content-max-width flex items-center justify-between h-12 md:h-[44px]">
         {/* Brand */}
         <a
           href="#hero"
-          className="text-lg font-semibold tracking-tight gradient-text"
+          className="text-sm font-normal tracking-tight transition-opacity duration-200 hover:opacity-70"
+          style={{ color: '#f5f5f7' }}
         >
           {brandName}
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8" aria-label="Main">
+        <nav className="hidden md:flex items-center gap-7" aria-label="Main">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-sm text-[rgb(var(--color-text-muted))] hover:text-[rgb(var(--color-text))] transition-colors duration-200"
+              className="text-xs transition-opacity duration-200 hover:opacity-70"
+              style={{ color: 'rgba(245, 245, 247, 0.8)' }}
             >
               {item.label}
             </a>
@@ -126,19 +128,22 @@ export default function Header({ brandName, navItems }: HeaderProps) {
           <span className="sr-only">Menu</span>
           <div className="flex flex-col gap-1.5">
             <span
-              className={`block w-5 h-0.5 bg-[rgb(var(--color-text))] transition-all duration-300 ${
-                isMenuOpen ? 'translate-y-2 rotate-45' : ''
+              className={`block w-5 h-[1.5px] transition-all duration-300 ${
+                isMenuOpen ? 'translate-y-[7.5px] rotate-45' : ''
               }`}
+              style={{ background: '#f5f5f7' }}
             />
             <span
-              className={`block w-5 h-0.5 bg-[rgb(var(--color-text))] transition-all duration-300 ${
+              className={`block w-5 h-[1.5px] transition-all duration-300 ${
                 isMenuOpen ? 'opacity-0' : ''
               }`}
+              style={{ background: '#f5f5f7' }}
             />
             <span
-              className={`block w-5 h-0.5 bg-[rgb(var(--color-text))] transition-all duration-300 ${
-                isMenuOpen ? '-translate-y-2 -rotate-45' : ''
+              className={`block w-5 h-[1.5px] transition-all duration-300 ${
+                isMenuOpen ? '-translate-y-[7.5px] -rotate-45' : ''
               }`}
+              style={{ background: '#f5f5f7' }}
             />
           </div>
         </button>
@@ -147,7 +152,8 @@ export default function Header({ brandName, navItems }: HeaderProps) {
         {isMenuOpen && (
           <div
             ref={overlayRef}
-            className="fixed inset-0 top-16 z-40 bg-[rgb(var(--color-surface)/0.98)] backdrop-blur-lg md:hidden"
+            className="fixed inset-0 top-12 z-40 md:hidden"
+            style={{ background: 'rgba(0, 0, 0, 0.95)', backdropFilter: 'blur(20px)' }}
             onClick={handleBackdropClick}
           >
             <nav
@@ -162,7 +168,8 @@ export default function Header({ brandName, navItems }: HeaderProps) {
                   key={item.href}
                   href={item.href}
                   onClick={handleNavClick}
-                  className="text-2xl font-light text-[rgb(var(--color-text))] hover:text-[rgb(var(--color-accent))] transition-colors duration-200"
+                  className="text-2xl font-light transition-opacity duration-200 hover:opacity-70"
+                  style={{ color: '#f5f5f7' }}
                 >
                   {item.label}
                 </a>

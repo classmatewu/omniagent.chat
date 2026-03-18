@@ -32,7 +32,7 @@ export default function ContactSection({ heading, email, displayLabel }: Contact
             opacity: 1,
             y: 0,
             duration: 0.8,
-            ease: 'power3.out',
+            ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
             scrollTrigger: {
               trigger: section,
               start: 'top 80%',
@@ -49,24 +49,34 @@ export default function ContactSection({ heading, email, displayLabel }: Contact
   }, []);
 
   return (
-    <section ref={sectionRef} id="contact" className="section-padding relative">
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="section-padding"
+      style={{ background: 'var(--color-surface)' }}
+    >
       <div className="content-max-width text-center">
         <div data-animate="contact-content">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight gradient-text mb-6">
+          <h2
+            className="text-[clamp(1.75rem,4vw,3rem)] font-semibold tracking-[-0.02em] leading-[1.1] mb-4"
+            style={{ color: 'var(--color-text)' }}
+          >
             {heading}
           </h2>
-          <p className="text-lg text-[rgb(var(--color-text-muted))] mb-8 font-light">
+          <p
+            className="text-lg mb-10"
+            style={{ color: 'var(--color-text-secondary)' }}
+          >
             Interested in partnerships, inquiries, or just want to say hello?
           </p>
           <a
             href={`mailto:${email}`}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-lg font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-            style={{ background: 'var(--gradient-accent)' }}
+            className="inline-flex items-center gap-2 text-[var(--color-accent)] text-lg hover:underline underline-offset-4 transition-all duration-200"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
             {displayLabel}
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </a>
         </div>
       </div>

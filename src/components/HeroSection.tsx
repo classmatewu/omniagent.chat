@@ -29,15 +29,22 @@ export default function HeroSection({ headline, subheadline }: HeroSectionProps)
           opacity: 1,
           y: 0,
           duration: 1,
-          ease: 'power3.out',
+          ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
           delay: 0.2,
         });
         gsap.to('[data-animate="hero-sub"]', {
           opacity: 1,
           y: 0,
           duration: 1,
-          ease: 'power3.out',
+          ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
           delay: 0.5,
+        });
+        gsap.to('[data-animate="hero-cta"]', {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
+          delay: 0.8,
         });
       }, section);
     });
@@ -51,30 +58,45 @@ export default function HeroSection({ headline, subheadline }: HeroSectionProps)
     <section
       ref={sectionRef}
       id="hero"
-      className="relative flex items-center justify-center min-h-screen section-padding pt-24 hero-bg overflow-hidden"
+      className="relative flex items-center justify-center min-h-screen pt-24 overflow-hidden noise-overlay"
+      style={{ background: 'var(--color-surface-dark)' }}
     >
-      {/* Decorative floating orbs */}
-      <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-[rgb(var(--color-accent)/0.06)] blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-[rgb(var(--color-accent-2)/0.05)] blur-3xl pointer-events-none" />
+      {/* Ambient glow */}
+      <div
+        className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(41, 151, 255, 0.08) 0%, transparent 70%)',
+        }}
+      />
 
       <div className="content-max-width text-center relative z-10">
         <h1
           data-animate="hero-headline"
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight gradient-text"
+          className="text-[clamp(2.5rem,7vw,6rem)] font-bold leading-[1.0] tracking-[-0.03em]"
+          style={{ color: 'var(--color-text-on-dark)' }}
         >
           {headline}
         </h1>
         {subheadline && (
           <p
             data-animate="hero-sub"
-            className="mt-6 md:mt-8 text-lg sm:text-xl md:text-2xl text-[rgb(var(--color-text-muted))] max-w-3xl mx-auto leading-relaxed font-light"
+            className="mt-6 md:mt-8 text-[clamp(1.1rem,2.5vw,1.5rem)] leading-relaxed max-w-3xl mx-auto"
+            style={{ color: 'var(--color-text-on-dark-secondary)' }}
           >
             {subheadline}
           </p>
         )}
-
-        {/* Decorative divider under hero */}
-        <div className="section-divider mt-12 md:mt-16" />
+        <div data-animate="hero-cta" className="mt-10 md:mt-14">
+          <a
+            href="#growth"
+            className="inline-flex items-center gap-2 text-[var(--color-accent)] text-lg font-normal hover:underline underline-offset-4 transition-all duration-200"
+          >
+            Learn more
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
   );

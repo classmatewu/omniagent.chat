@@ -34,11 +34,24 @@ export default function DomainSection({
         gsap.registerPlugin(ScrollTrigger);
 
         ctx = gsap.context(() => {
+          gsap.to('[data-animate="domain-label"]', {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 75%',
+              once: true,
+            },
+          });
+
           gsap.to('[data-animate="domain-name"]', {
             opacity: 1,
             y: 0,
             duration: 0.8,
-            ease: 'power3.out',
+            delay: 0.15,
+            ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
             scrollTrigger: {
               trigger: section,
               start: 'top 75%',
@@ -50,24 +63,10 @@ export default function DomainSection({
           if (priceEl) {
             gsap.to(priceEl, {
               opacity: 1,
-              scale: 1,
-              duration: 1.2,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: priceEl,
-                start: 'top 80%',
-                once: true,
-              },
-            });
-
-            // Subtle glow pulse after reveal
-            gsap.to(priceEl, {
-              textShadow: '0 0 40px rgb(var(--color-accent) / 0.3)',
-              duration: 2,
-              repeat: -1,
-              yoyo: true,
-              ease: 'sine.inOut',
-              delay: 1.5,
+              y: 0,
+              duration: 1,
+              delay: 0.3,
+              ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
               scrollTrigger: {
                 trigger: priceEl,
                 start: 'top 80%',
@@ -81,7 +80,7 @@ export default function DomainSection({
             y: 0,
             duration: 0.8,
             delay: 0.5,
-            ease: 'power3.out',
+            ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
             scrollTrigger: {
               trigger: section,
               start: 'top 70%',
@@ -98,38 +97,59 @@ export default function DomainSection({
   }, []);
 
   return (
-    <section ref={sectionRef} id="domain" className="section-padding domain-showcase relative overflow-hidden">
-      {/* Decorative glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[rgb(var(--color-accent)/0.04)] blur-3xl pointer-events-none" />
+    <section
+      ref={sectionRef}
+      id="domain"
+      className="section-padding relative overflow-hidden noise-overlay"
+      style={{ background: 'var(--color-surface-dark)' }}
+    >
+      {/* Subtle ambient glow behind price */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(41, 151, 255, 0.06) 0%, transparent 70%)',
+        }}
+      />
 
       <div className="content-max-width text-center relative z-10">
         <p
+          data-animate="domain-label"
+          className="text-sm font-medium tracking-[0.2em] uppercase mb-3"
+          style={{ color: 'var(--color-accent)' }}
+        >
+          Record-Breaking Domain Sale
+        </p>
+
+        <p
           data-animate="domain-name"
-          className="text-lg md:text-xl text-[rgb(var(--color-accent))] font-medium tracking-widest uppercase mb-4"
+          className="text-[clamp(1.5rem,3vw,2.5rem)] font-semibold tracking-[-0.02em] mb-8 md:mb-12"
+          style={{ color: 'var(--color-text-on-dark)' }}
         >
           {domainName}
         </p>
 
-        <div
-          data-animate="domain-price"
-          className="my-8 md:my-12"
-        >
-          <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold gradient-text glow-accent inline-block">
+        <div data-animate="domain-price" className="mb-8 md:mb-12">
+          <div
+            className="text-[clamp(3.5rem,10vw,8rem)] font-bold tracking-[-0.03em] leading-[1.0] tabular-nums"
+            style={{ color: 'var(--color-text-on-dark)' }}
+          >
             <AnimatedCounter value={salePriceNumeric} prefix="$" duration={2.5} />
           </div>
-          <p className="mt-4 text-base md:text-lg text-[rgb(var(--color-text-muted))] font-light">
+          <p
+            className="mt-4 text-base md:text-lg font-normal"
+            style={{ color: 'var(--color-text-on-dark-secondary)' }}
+          >
             The highest publicly disclosed domain sale in history
           </p>
         </div>
 
         <p
           data-animate="domain-context"
-          className="text-base md:text-lg text-[rgb(var(--color-text-muted))] max-w-2xl mx-auto leading-relaxed font-light"
+          className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+          style={{ color: 'var(--color-text-on-dark-secondary)' }}
         >
           {context}
         </p>
-
-        <div className="section-divider mt-12 md:mt-16" />
       </div>
     </section>
   );
