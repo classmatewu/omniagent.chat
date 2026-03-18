@@ -76,7 +76,7 @@ export default function GrowthSection({ heading, description, statistics }: Grow
   }, []);
 
   return (
-    <section ref={sectionRef} id="growth" className="section-padding">
+    <section ref={sectionRef} id="growth" className="section-padding relative">
       <div className="content-max-width">
         <div className="text-center mb-16 md:mb-20">
           <h2
@@ -98,9 +98,9 @@ export default function GrowthSection({ heading, description, statistics }: Grow
             <div
               key={index}
               data-animate="stat-card"
-              className="text-center p-8 rounded-2xl bg-[rgb(var(--color-surface-alt))] border border-[rgb(var(--color-border)/0.5)]"
+              className="gradient-border-card text-center p-8"
             >
-              <div className="text-4xl md:text-5xl font-bold text-[rgb(var(--color-accent))] mb-3">
+              <div className="text-4xl md:text-5xl font-bold gradient-text mb-3">
                 <AnimatedCounter
                   value={stat.value}
                   prefix={stat.prefix}
@@ -119,6 +119,8 @@ export default function GrowthSection({ heading, description, statistics }: Grow
             </div>
           ))}
         </div>
+
+        <div className="section-divider mt-16 md:mt-20" />
       </div>
     </section>
   );

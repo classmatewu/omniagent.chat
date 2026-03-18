@@ -3,21 +3,31 @@
 @layer base {
   :root {
     --color-surface: 255 255 255;
-    --color-surface-alt: 249 250 251;
+    --color-surface-alt: 247 248 252;
+    --color-surface-elevated: 255 255 255;
     --color-text: 15 23 42;
     --color-text-muted: 100 116 139;
-    --color-accent: 59 130 246;
+    --color-accent: 99 102 241;
+    --color-accent-2: 168 85 247;
+    --color-accent-3: 59 130 246;
     --color-border: 226 232 240;
+    --gradient-accent: linear-gradient(135deg, rgb(99 102 241), rgb(168 85 247), rgb(59 130 246));
+    --gradient-glow: radial-gradient(ellipse at 50% 0%, rgb(99 102 241 / 0.15) 0%, transparent 60%);
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --color-surface: 10 10 10;
-      --color-surface-alt: 23 23 23;
+      --color-surface: 9 9 11;
+      --color-surface-alt: 14 15 20;
+      --color-surface-elevated: 24 24 32;
       --color-text: 241 245 249;
       --color-text-muted: 148 163 184;
-      --color-accent: 96 165 250;
-      --color-border: 51 65 85;
+      --color-accent: 129 140 248;
+      --color-accent-2: 192 132 252;
+      --color-accent-3: 96 165 250;
+      --color-border: 45 50 70;
+      --gradient-accent: linear-gradient(135deg, rgb(129 140 248), rgb(192 132 252), rgb(96 165 250));
+      --gradient-glow: radial-gradient(ellipse at 50% 0%, rgb(129 140 248 / 0.12) 0%, transparent 60%);
     }
   }
 
@@ -33,18 +43,16 @@
   }
 
   ::selection {
-    background-color: rgb(var(--color-accent) / 0.2);
+    background-color: rgb(var(--color-accent) / 0.25);
   }
 
-  /* Elements with [data-animate] start hidden, GSAP reveals them.
-     If JS is disabled, the noscript rule below makes them visible. */
   [data-animate] {
     opacity: 0;
     transform: translateY(30px);
   }
 }
 
-/* No-JS fallback: show all animated elements immediately */
+/* No-JS fallback */
 @media (scripting: none) {
   [data-animate] {
     opacity: 1 !important;
@@ -52,7 +60,7 @@
   }
 }
 
-/* Reduced motion: show all animated elements immediately */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   [data-animate] {
     opacity: 1 !important;
@@ -80,5 +88,78 @@
     margin-right: auto;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  /* Gradient text utility */
+  .gradient-text {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Gradient border card */
+  .gradient-border-card {
+    position: relative;
+    background: rgb(var(--color-surface-elevated));
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .gradient-border-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 1px;
+    background: var(--gradient-accent);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .gradient-border-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Glow effect */
+  .glow-accent {
+    box-shadow: 0 0 60px -12px rgb(var(--color-accent) / 0.25);
+  }
+
+  /* Section divider */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--color-accent) / 0.3),
+      rgb(var(--color-accent-2) / 0.3),
+      transparent
+    );
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Hero background mesh */
+  .hero-bg {
+    background-image:
+      var(--gradient-glow),
+      radial-gradient(ellipse at 80% 50%, rgb(var(--color-accent-2) / 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 80%, rgb(var(--color-accent-3) / 0.06) 0%, transparent 50%);
+  }
+
+  /* Domain showcase dark section */
+  .domain-showcase {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-surface-alt)),
+      rgb(var(--color-surface-elevated)),
+      rgb(var(--color-surface-alt))
+    );
   }
 }

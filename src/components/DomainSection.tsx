@@ -98,11 +98,14 @@ export default function DomainSection({
   }, []);
 
   return (
-    <section ref={sectionRef} id="domain" className="section-padding">
-      <div className="content-max-width text-center">
+    <section ref={sectionRef} id="domain" className="section-padding domain-showcase relative overflow-hidden">
+      {/* Decorative glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[rgb(var(--color-accent)/0.04)] blur-3xl pointer-events-none" />
+
+      <div className="content-max-width text-center relative z-10">
         <p
           data-animate="domain-name"
-          className="text-lg md:text-xl text-[rgb(var(--color-text-muted))] font-light tracking-widest uppercase mb-4"
+          className="text-lg md:text-xl text-[rgb(var(--color-accent))] font-medium tracking-widest uppercase mb-4"
         >
           {domainName}
         </p>
@@ -111,7 +114,7 @@ export default function DomainSection({
           data-animate="domain-price"
           className="my-8 md:my-12"
         >
-          <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[rgb(var(--color-text))]">
+          <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold gradient-text glow-accent inline-block">
             <AnimatedCounter value={salePriceNumeric} prefix="$" duration={2.5} />
           </div>
           <p className="mt-4 text-base md:text-lg text-[rgb(var(--color-text-muted))] font-light">
@@ -125,6 +128,8 @@ export default function DomainSection({
         >
           {context}
         </p>
+
+        <div className="section-divider mt-12 md:mt-16" />
       </div>
     </section>
   );

@@ -51,12 +51,16 @@ export default function HeroSection({ headline, subheadline }: HeroSectionProps)
     <section
       ref={sectionRef}
       id="hero"
-      className="relative flex items-center justify-center min-h-screen section-padding pt-24"
+      className="relative flex items-center justify-center min-h-screen section-padding pt-24 hero-bg overflow-hidden"
     >
-      <div className="content-max-width text-center">
+      {/* Decorative floating orbs */}
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-[rgb(var(--color-accent)/0.06)] blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-[rgb(var(--color-accent-2)/0.05)] blur-3xl pointer-events-none" />
+
+      <div className="content-max-width text-center relative z-10">
         <h1
           data-animate="hero-headline"
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-[rgb(var(--color-text))]"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight gradient-text"
         >
           {headline}
         </h1>
@@ -68,6 +72,9 @@ export default function HeroSection({ headline, subheadline }: HeroSectionProps)
             {subheadline}
           </p>
         )}
+
+        {/* Decorative divider under hero */}
+        <div className="section-divider mt-12 md:mt-16" />
       </div>
     </section>
   );

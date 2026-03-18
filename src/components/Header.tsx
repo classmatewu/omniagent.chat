@@ -96,7 +96,7 @@ export default function Header({ brandName, navItems }: HeaderProps) {
         {/* Brand */}
         <a
           href="#hero"
-          className="text-lg font-semibold tracking-tight text-[rgb(var(--color-text))]"
+          className="text-lg font-semibold tracking-tight gradient-text"
         >
           {brandName}
         </a>

@@ -49,10 +49,10 @@ export default function ContactSection({ heading, email, displayLabel }: Contact
   }, []);
 
   return (
-    <section ref={sectionRef} id="contact" className="section-padding">
+    <section ref={sectionRef} id="contact" className="section-padding relative">
       <div className="content-max-width text-center">
         <div data-animate="contact-content">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[rgb(var(--color-text))] mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight gradient-text mb-6">
             {heading}
           </h2>
           <p className="text-lg text-[rgb(var(--color-text-muted))] mb-8 font-light">
@@ -60,8 +60,12 @@ export default function ContactSection({ heading, email, displayLabel }: Contact
           </p>
           <a
             href={`mailto:${email}`}
-            className="inline-block text-xl md:text-2xl font-medium text-[rgb(var(--color-accent))] hover:opacity-80 transition-opacity duration-200 underline underline-offset-4 decoration-[rgb(var(--color-accent)/0.3)] hover:decoration-[rgb(var(--color-accent))]"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-lg font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            style={{ background: 'var(--gradient-accent)' }}
           >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
             {displayLabel}
           </a>
         </div>
