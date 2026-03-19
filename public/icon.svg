@@ -1,27 +1,79 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#60a5fa"/>
-      <stop offset="50%" stop-color="#818cf8"/>
-      <stop offset="100%" stop-color="#2997ff"/>
-    </linearGradient>
-  </defs>
-  <!-- Background circle -->
+  <!--
+    OmniAgent Icon
+    Two abstract lobster claws in rotational symmetry (180°),
+    forming an orbital/eye shape. Solid monochrome, OpenAI-inspired.
+    Each claw: thick curved arm + two pincer tips (fork).
+  -->
   <circle cx="256" cy="256" r="256" fill="#000"/>
-  <!-- Left claw arc -->
-  <path d="M148 160 Q96 256 148 352" stroke="url(#g)" stroke-width="36" fill="none" stroke-linecap="round"/>
-  <!-- Right claw arc -->
-  <path d="M364 160 Q416 256 364 352" stroke="url(#g)" stroke-width="36" fill="none" stroke-linecap="round"/>
-  <!-- Left claw tip - upper -->
-  <path d="M148 160 Q168 120 208 112" stroke="url(#g)" stroke-width="28" fill="none" stroke-linecap="round"/>
-  <!-- Left claw tip - lower -->
-  <path d="M148 352 Q168 392 208 400" stroke="url(#g)" stroke-width="28" fill="none" stroke-linecap="round"/>
-  <!-- Right claw tip - upper -->
-  <path d="M364 160 Q344 120 304 112" stroke="url(#g)" stroke-width="28" fill="none" stroke-linecap="round"/>
-  <!-- Right claw tip - lower -->
-  <path d="M364 352 Q344 392 304 400" stroke="url(#g)" stroke-width="28" fill="none" stroke-linecap="round"/>
-  <!-- Agent core - outer ring -->
-  <circle cx="256" cy="256" r="52" stroke="url(#g)" stroke-width="16" fill="none"/>
-  <!-- Agent core - inner dot -->
-  <circle cx="256" cy="256" r="16" fill="url(#g)"/>
+  <g fill="#fff">
+    <!-- Upper-left claw arm curving down-right, with forked tips -->
+    <path d="
+      M152 128
+      Q108 168 96 224
+      Q84 280 116 328
+      Q132 354 160 368
+      L172 344
+      Q148 332 136 312
+      Q112 272 120 228
+      Q128 184 164 152
+      Z
+    "/>
+    <!-- Upper-left claw: upper pincer tip -->
+    <path d="
+      M152 128
+      Q176 108 208 104
+      Q224 102 236 108
+      L224 132
+      Q214 128 204 128
+      Q182 130 164 148
+      Z
+    "/>
+    <!-- Upper-left claw: lower pincer tip -->
+    <path d="
+      M160 368
+      Q184 388 216 396
+      Q232 400 244 396
+      L236 372
+      Q226 374 216 372
+      Q194 366 176 352
+      Z
+    "/>
+
+    <!-- Lower-right claw arm (180° rotated copy) -->
+    <path d="
+      M360 384
+      Q404 344 416 288
+      Q428 232 396 184
+      Q380 158 352 144
+      L340 168
+      Q364 180 376 200
+      Q400 240 392 284
+      Q384 328 348 360
+      Z
+    "/>
+    <!-- Lower-right claw: upper pincer tip -->
+    <path d="
+      M352 144
+      Q328 124 296 116
+      Q280 112 268 116
+      L276 140
+      Q286 138 296 140
+      Q318 146 336 160
+      Z
+    "/>
+    <!-- Lower-right claw: lower pincer tip -->
+    <path d="
+      M360 384
+      Q336 404 304 408
+      Q288 410 276 404
+      L284 380
+      Q294 384 304 382
+      Q326 378 344 364
+      Z
+    "/>
+
+    <!-- Agent core: central dot -->
+    <circle cx="256" cy="256" r="20"/>
+  </g>
 </svg>
