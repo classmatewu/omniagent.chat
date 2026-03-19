@@ -95,7 +95,7 @@ export default function Header({ brandName, navItems }: HeaderProps) {
       <div className="content-max-width flex items-center justify-between h-12 md:h-[44px]">
         {/* Brand */}
         <a
-          href="#hero"
+          href="#home"
           className="text-sm font-normal tracking-tight transition-opacity duration-200 hover:opacity-70"
           style={{ color: '#f5f5f7' }}
         >

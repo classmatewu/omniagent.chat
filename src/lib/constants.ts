@@ -1,7 +1,7 @@
 import type { NavItem, Statistic, DomainData, ContactInfo, HeroContent } from '@/types';
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: 'Home', href: '#hero' },
+  { label: 'Home', href: '#home' },
   { label: 'Growth', href: '#growth' },
   { label: 'Domain', href: '#domain' },
   { label: 'Contact', href: '#contact' },

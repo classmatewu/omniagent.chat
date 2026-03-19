@@ -57,7 +57,7 @@ export default function HeroSection({ headline, subheadline }: HeroSectionProps)
   return (
     <section
       ref={sectionRef}
-      id="hero"
+      id="home"
       className="relative flex items-center justify-center min-h-screen pt-24 overflow-hidden noise-overlay"
       style={{ background: 'var(--color-surface-dark)' }}
     >
