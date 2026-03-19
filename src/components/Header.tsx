@@ -84,12 +84,18 @@ export default function Header({ brandName, navItems }: HeaderProps) {
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        background: isScrolled
-          ? 'rgba(0, 0, 0, 0.72)'
-          : 'transparent',
-        backdropFilter: isScrolled ? 'saturate(180%) blur(20px)' : 'none',
-        WebkitBackdropFilter: isScrolled ? 'saturate(180%) blur(20px)' : 'none',
-        borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid transparent',
+        background: isMenuOpen
+          ? 'rgba(0, 0, 0, 0.95)'
+          : isScrolled
+            ? 'rgba(0, 0, 0, 0.72)'
+            : 'transparent',
+        backdropFilter: isScrolled || isMenuOpen ? 'saturate(180%) blur(20px)' : 'none',
+        WebkitBackdropFilter: isScrolled || isMenuOpen ? 'saturate(180%) blur(20px)' : 'none',
+        borderBottom: isMenuOpen
+          ? '1px solid transparent'
+          : isScrolled
+            ? '1px solid rgba(255, 255, 255, 0.08)'
+            : '1px solid transparent',
       }}
     >
       <div className="content-max-width flex items-center justify-between h-12 md:h-[44px]">
