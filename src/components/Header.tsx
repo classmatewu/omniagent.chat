@@ -102,10 +102,32 @@ export default function Header({ brandName, navItems }: HeaderProps) {
         {/* Brand */}
         <a
           href="#home"
-          className="text-sm font-normal tracking-tight transition-opacity duration-200 hover:opacity-70"
-          style={{ color: '#f5f5f7' }}
+          className="flex items-center gap-2 transition-opacity duration-200 hover:opacity-70"
         >
-          {brandName}
+          <svg width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#60a5fa"/>
+                <stop offset="50%" stopColor="#818cf8"/>
+                <stop offset="100%" stopColor="#2997ff"/>
+              </linearGradient>
+            </defs>
+            <circle cx="256" cy="256" r="256" fill="#000"/>
+            <path d="M148 160 Q96 256 148 352" stroke="url(#hg)" strokeWidth="36" fill="none" strokeLinecap="round"/>
+            <path d="M364 160 Q416 256 364 352" stroke="url(#hg)" strokeWidth="36" fill="none" strokeLinecap="round"/>
+            <path d="M148 160 Q168 120 208 112" stroke="url(#hg)" strokeWidth="28" fill="none" strokeLinecap="round"/>
+            <path d="M148 352 Q168 392 208 400" stroke="url(#hg)" strokeWidth="28" fill="none" strokeLinecap="round"/>
+            <path d="M364 160 Q344 120 304 112" stroke="url(#hg)" strokeWidth="28" fill="none" strokeLinecap="round"/>
+            <path d="M364 352 Q344 392 304 400" stroke="url(#hg)" strokeWidth="28" fill="none" strokeLinecap="round"/>
+            <circle cx="256" cy="256" r="52" stroke="url(#hg)" strokeWidth="16" fill="none"/>
+            <circle cx="256" cy="256" r="16" fill="url(#hg)"/>
+          </svg>
+          <span
+            className="text-sm font-normal tracking-tight"
+            style={{ color: '#f5f5f7' }}
+          >
+            {brandName}
+          </span>
         </a>
 
         {/* Desktop Nav */}
