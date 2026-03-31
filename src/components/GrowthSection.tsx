@@ -29,11 +29,22 @@ export default function GrowthSection({ heading, description, statistics }: Grow
         gsap.registerPlugin(ScrollTrigger);
 
         ctx = gsap.context(() => {
+          gsap.to('[data-animate="growth-line"]', {
+            scaleX: 1,
+            duration: 0.8,
+            ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            scrollTrigger: {
+              trigger: '[data-animate="growth-line"]',
+              start: 'top 90%',
+              once: true,
+            },
+          });
+
           gsap.to('[data-animate="growth-heading"]', {
             opacity: 1,
             y: 0,
             duration: 0.8,
-            ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
+            ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
             scrollTrigger: {
               trigger: '[data-animate="growth-heading"]',
               start: 'top 85%',
@@ -45,7 +56,7 @@ export default function GrowthSection({ heading, description, statistics }: Grow
             opacity: 1,
             y: 0,
             duration: 0.8,
-            ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
+            ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
             scrollTrigger: {
               trigger: '[data-animate="growth-desc"]',
               start: 'top 85%',
@@ -60,10 +71,10 @@ export default function GrowthSection({ heading, description, statistics }: Grow
                 opacity: 1,
                 y: 0,
                 duration: 0.7,
-                ease: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
-                stagger: 0.12,
+                ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                stagger: 0.1,
               }),
-            start: 'top 85%',
+            start: 'top 88%',
             once: true,
           });
         }, section);
@@ -75,25 +86,48 @@ export default function GrowthSection({ heading, description, statistics }: Grow
     };
   }, []);
 
+  // Accent colors for each card
+  const cardAccents = [
+    { color: 'var(--color-accent)', glow: 'rgba(0, 221, 179, 0.08)' },
+    { color: 'var(--color-accent-warm)', glow: 'rgba(245, 166, 35, 0.06)' },
+    { color: 'var(--color-accent)', glow: 'rgba(0, 221, 179, 0.08)' },
+    { color: 'var(--color-accent-warm)', glow: 'rgba(245, 166, 35, 0.06)' },
+  ];
+
   return (
     <section
       ref={sectionRef}
       id="growth"
-      className="section-padding"
+      className="section-padding relative overflow-hidden"
       style={{ background: 'var(--color-surface-alt)' }}
     >
+      {/* Subtle top border glow */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{
+          background:
+            'linear-gradient(90deg, transparent, rgba(0, 221, 179, 0.12), transparent)',
+        }}
+      />
+
       <div className="content-max-width">
-        <div className="text-center mb-16 md:mb-20">
+        {/* Section header - left aligned for editorial feel */}
+        <div className="mb-16 md:mb-20 max-w-2xl">
+          <div
+            data-animate="growth-line"
+            className="accent-line mb-6"
+            style={{ transformOrigin: 'left', transform: 'scaleX(0)' }}
+          />
           <h2
             data-animate="growth-heading"
-            className="text-[clamp(1.75rem,4vw,3rem)] font-semibold tracking-[-0.02em] leading-[1.1]"
+            className="text-[clamp(1.75rem,4vw,3rem)] font-bold tracking-[-0.03em] leading-[1.1]"
             style={{ color: 'var(--color-text)' }}
           >
             {heading}
           </h2>
           <p
             data-animate="growth-desc"
-            className="mt-5 text-[clamp(1rem,1.5vw,1.25rem)] max-w-2xl mx-auto leading-relaxed"
+            className="mt-5 text-[clamp(1rem,1.5vw,1.15rem)] leading-[1.7] font-light"
             style={{ color: 'var(--color-text-secondary)' }}
           >
             {description}
@@ -105,14 +139,31 @@ export default function GrowthSection({ heading, description, statistics }: Grow
             <div
               key={index}
               data-animate="stat-card"
-              className="rounded-2xl p-8 md:p-10 transition-colors duration-300"
+              className="card-glow rounded-2xl p-8 md:p-10 relative overflow-hidden"
               style={{
-                background: 'var(--color-surface)',
+                background: 'var(--color-surface-card)',
                 border: '1px solid var(--color-border)',
               }}
             >
+              {/* Top accent line */}
               <div
-                className="text-[clamp(2.5rem,5vw,3.5rem)] font-bold tracking-[-0.02em] mb-2 tabular-nums"
+                className="absolute top-0 left-8 right-8 md:left-10 md:right-10 h-px"
+                style={{
+                  background: `linear-gradient(90deg, ${cardAccents[index].color}, transparent)`,
+                  opacity: 0.3,
+                }}
+              />
+
+              {/* Number index */}
+              <span
+                className="text-[10px] font-mono tracking-[0.2em] uppercase mb-6 block"
+                style={{ color: cardAccents[index].color, opacity: 0.6 }}
+              >
+                0{index + 1}
+              </span>
+
+              <div
+                className="text-[clamp(2.5rem,5vw,3.5rem)] font-bold tracking-[-0.03em] mb-3 tabular-nums"
                 style={{ color: 'var(--color-text)' }}
               >
                 <AnimatedCounter
@@ -123,14 +174,14 @@ export default function GrowthSection({ heading, description, statistics }: Grow
                 />
               </div>
               <div
-                className="text-base font-semibold mb-2"
-                style={{ color: 'var(--color-text)' }}
+                className="text-sm font-semibold uppercase tracking-[0.05em] mb-3"
+                style={{ color: cardAccents[index].color }}
               >
                 {stat.label}
               </div>
               {stat.context && (
                 <p
-                  className="text-sm leading-relaxed"
+                  className="text-sm leading-[1.7] font-light"
                   style={{ color: 'var(--color-text-secondary)' }}
                 >
                   {stat.context}

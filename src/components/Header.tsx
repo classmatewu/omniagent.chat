@@ -82,45 +82,64 @@ export default function Header({ brandName, navItems }: HeaderProps) {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
         background: isMenuOpen
-          ? 'rgba(0, 0, 0, 0.95)'
+          ? 'rgba(7, 8, 12, 0.98)'
           : isScrolled
-            ? 'rgba(0, 0, 0, 0.72)'
+            ? 'rgba(7, 8, 12, 0.85)'
             : 'transparent',
         backdropFilter: isScrolled || isMenuOpen ? 'saturate(180%) blur(20px)' : 'none',
         WebkitBackdropFilter: isScrolled || isMenuOpen ? 'saturate(180%) blur(20px)' : 'none',
-        borderBottom: isMenuOpen
-          ? '1px solid transparent'
-          : isScrolled
-            ? '1px solid rgba(255, 255, 255, 0.08)'
+        borderBottom:
+          isScrolled && !isMenuOpen
+            ? '1px solid rgba(0, 221, 179, 0.06)'
             : '1px solid transparent',
       }}
     >
-      <div className="content-max-width flex items-center justify-between h-12 md:h-[44px]">
+      <div className="content-max-width flex items-center justify-between h-14 md:h-[52px]">
         {/* Brand */}
         <a
           href="#home"
-          className="flex items-center gap-2 transition-opacity duration-200 hover:opacity-70"
+          className="flex items-center gap-2.5 transition-opacity duration-300 hover:opacity-80 group"
         >
-          <img src="/images/logo.png" alt="omniagent.chat" width={28} height={28} className="rounded-md" />
+          <div className="relative">
+            <img
+              src="/images/logo.png"
+              alt="omniagent.chat"
+              width={28}
+              height={28}
+              className="rounded-md relative z-10"
+            />
+            <div
+              className="absolute inset-0 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{
+                boxShadow: '0 0 12px rgba(0, 221, 179, 0.3)',
+              }}
+            />
+          </div>
           <span
-            className="text-sm font-normal tracking-tight"
-            style={{ color: '#f5f5f7' }}
+            className="text-sm font-medium tracking-[-0.01em]"
+            style={{ color: 'var(--color-text)' }}
           >
             {brandName}
           </span>
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-7" aria-label="Main">
+        <nav className="hidden md:flex items-center gap-1" aria-label="Main">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-xs transition-opacity duration-200 hover:opacity-70"
-              style={{ color: 'rgba(245, 245, 247, 0.8)' }}
+              className="relative px-4 py-1.5 text-xs font-medium tracking-wide uppercase rounded-full transition-all duration-300 hover:bg-[rgba(0,221,179,0.06)]"
+              style={{ color: 'rgba(232, 234, 240, 0.6)' }}
+              onMouseEnter={(e) => {
+                (e.target as HTMLElement).style.color = 'var(--color-accent)';
+              }}
+              onMouseLeave={(e) => {
+                (e.target as HTMLElement).style.color = 'rgba(232, 234, 240, 0.6)';
+              }}
             >
               {item.label}
             </a>
@@ -130,31 +149,34 @@ export default function Header({ brandName, navItems }: HeaderProps) {
         {/* Mobile Hamburger Button */}
         <button
           ref={toggleRef}
-          className="md:hidden relative w-10 h-10 flex items-center justify-center"
+          className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300"
+          style={{
+            background: isMenuOpen ? 'rgba(0, 221, 179, 0.08)' : 'transparent',
+          }}
           aria-expanded={isMenuOpen}
           aria-controls="nav-menu"
           aria-label="Menu"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <span className="sr-only">Menu</span>
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-[5px]">
             <span
-              className={`block w-5 h-[1.5px] transition-all duration-300 ${
-                isMenuOpen ? 'translate-y-[7.5px] rotate-45' : ''
+              className={`block w-[18px] h-[1.5px] rounded-full transition-all duration-400 ${
+                isMenuOpen ? 'translate-y-[6.5px] rotate-45' : ''
               }`}
-              style={{ background: '#f5f5f7' }}
+              style={{ background: isMenuOpen ? 'var(--color-accent)' : 'var(--color-text)' }}
             />
             <span
-              className={`block w-5 h-[1.5px] transition-all duration-300 ${
-                isMenuOpen ? 'opacity-0' : ''
+              className={`block w-[18px] h-[1.5px] rounded-full transition-all duration-400 ${
+                isMenuOpen ? 'opacity-0 scale-x-0' : ''
               }`}
-              style={{ background: '#f5f5f7' }}
+              style={{ background: 'var(--color-text)' }}
             />
             <span
-              className={`block w-5 h-[1.5px] transition-all duration-300 ${
-                isMenuOpen ? '-translate-y-[7.5px] -rotate-45' : ''
+              className={`block w-[18px] h-[1.5px] rounded-full transition-all duration-400 ${
+                isMenuOpen ? '-translate-y-[6.5px] -rotate-45' : ''
               }`}
-              style={{ background: '#f5f5f7' }}
+              style={{ background: isMenuOpen ? 'var(--color-accent)' : 'var(--color-text)' }}
             />
           </div>
         </button>
@@ -163,8 +185,12 @@ export default function Header({ brandName, navItems }: HeaderProps) {
         {isMenuOpen && (
           <div
             ref={overlayRef}
-            className="fixed inset-0 top-12 z-40 md:hidden"
-            style={{ background: 'rgba(0, 0, 0, 0.95)', backdropFilter: 'blur(20px)' }}
+            className="fixed inset-0 top-14 z-40 md:hidden"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(7, 8, 12, 0.98) 0%, rgba(7, 8, 12, 0.95) 100%)',
+              backdropFilter: 'blur(24px)',
+            }}
             onClick={handleBackdropClick}
           >
             <nav
@@ -172,17 +198,32 @@ export default function Header({ brandName, navItems }: HeaderProps) {
               id="nav-menu"
               role="navigation"
               aria-label="Main"
-              className="flex flex-col items-center justify-center h-full gap-8"
+              className="flex flex-col items-start justify-center h-full px-8 gap-2"
             >
-              {navItems.map((item) => (
+              {navItems.map((item, index) => (
                 <a
                   key={item.href}
                   href={item.href}
                   onClick={handleNavClick}
-                  className="text-2xl font-light transition-opacity duration-200 hover:opacity-70"
-                  style={{ color: '#f5f5f7' }}
+                  className="group flex items-center gap-4 py-4 w-full transition-all duration-300"
+                  style={{
+                    color: 'var(--color-text)',
+                    animationDelay: `${index * 60}ms`,
+                  }}
                 >
-                  {item.label}
+                  <span
+                    className="text-[10px] font-mono tracking-widest transition-colors duration-300 group-hover:text-[var(--color-accent)]"
+                    style={{ color: 'var(--color-text-secondary)' }}
+                  >
+                    0{index + 1}
+                  </span>
+                  <span className="text-3xl font-light tracking-[-0.02em] transition-colors duration-300 group-hover:text-[var(--color-accent)]">
+                    {item.label}
+                  </span>
+                  <div
+                    className="flex-1 h-px transition-all duration-300 group-hover:bg-[rgba(0,221,179,0.2)]"
+                    style={{ background: 'var(--color-border)' }}
+                  />
                 </a>
               ))}
             </nav>
